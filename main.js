@@ -83,3 +83,20 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+window.addEventListener("click", (event) => {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(scene.children);
+
+  if (intersects.length > 0) {
+    const selectedRoom = intersects[0].object;
+    selectedRoom.material.color.set(0xff0000); // Change color on click
+    console.log("Room selected:", selectedRoom);
+  }
+});
