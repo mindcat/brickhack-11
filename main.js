@@ -1,6 +1,27 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { MapControls } from 'three/addons/controls/MapControls.js';
 import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
+
+// map based rendering:
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+camera.position.set( 0, 20, 100 );
+
+const controls = new MapControls( camera, renderer.domElement );
+controls.enableDamping = true;
+controls.screenSpacePanning = true;
+
+
+
+
+
+
 // const scene = new THREE.Scene();
 // const camera = new THREE.PerspectiveCamera(
 //   75,
@@ -27,23 +48,23 @@ import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
 // }
 // renderer.setAnimationLoop(animate);
 // Scene setup
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  50,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+// const scene = new THREE.Scene();
+// const camera = new THREE.PerspectiveCamera(
+//   50,
+//   window.innerWidth / window.innerHeight,
+//   0.1,
+//   1000
+// );
+// const renderer = new THREE.WebGLRenderer({ antialias: true });
+// renderer.setSize(window.innerWidth, window.innerHeight);
+// document.body.appendChild(renderer.domElement);
 
 // Add orbit controls (for zoom & rotate)
-const controls = new OrbitControls(camera, renderer.domElement);
+// const controls = new OrbitControls(camera, renderer.domElement);
 
 // Load SVG
 const loader = new SVGLoader();
-loader.load("tunnels/TUN-CENTRAL.svg", (data) => {
+loader.load("tunnels/TUNNEL-CENTRAL-1.svg", (data) => {
   const paths = data.paths;
 
   paths.forEach((path) => {
@@ -60,6 +81,7 @@ loader.load("tunnels/TUN-CENTRAL.svg", (data) => {
       });
       const mesh = new THREE.Mesh(geometry, material);
       mesh.position.set(0, 0, 0); // Adjust position as needed
+      mesh.rotation.set(0, 0, 0); // Rotate as needed
       scene.add(mesh);
     });
   });
