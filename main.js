@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { MapControls } from 'three/addons/controls/MapControls.js';
 import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
 
@@ -11,14 +11,11 @@ document.body.appendChild( renderer.domElement );
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-camera.position.set( 0, 20, 100 );
+camera.position.set( 0, 0, 0 );
 
 const controls = new MapControls( camera, renderer.domElement );
 controls.enableDamping = true;
 controls.screenSpacePanning = true;
-
-
-
 
 
 
@@ -64,7 +61,7 @@ controls.screenSpacePanning = true;
 
 // Load SVG
 const loader = new SVGLoader();
-loader.load("tunnels/TUNNEL-CENTRAL-1.svg", (data) => {
+loader.load("tunnels/tun-v2_2.svg", (data) => {
   const paths = data.paths;
 
   paths.forEach((path) => {
@@ -76,11 +73,11 @@ loader.load("tunnels/TUNNEL-CENTRAL-1.svg", (data) => {
         bevelEnabled: false,
       });
       const material = new THREE.MeshStandardMaterial({
-        color: 0x0077ff,
+        color: 0xF76902,
         side: THREE.DoubleSide,
       });
       const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.set(0, 0, 0); // Adjust position as needed
+      mesh.position.set(-500, 0, 0); // Adjust position as needed
       mesh.rotation.set(0, 0, 0); // Rotate as needed
       scene.add(mesh);
     });
@@ -96,7 +93,7 @@ scene.add(directionalLight);
 
 // Position the camera
 camera.position.set(0, -50, 50);
-camera.lookAt(0, 0, 0);
+// camera.lookAt(0, 0, 0);
 
 // Render loop
 function animate() {
